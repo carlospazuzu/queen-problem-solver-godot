@@ -7,10 +7,8 @@ var board = null
 
 var globals_ref = null
 
-
 func _init(gref):
 	globals_ref = gref
-
 
 # Called when the node enters the scene tree for the first time.
 func setup():
@@ -29,11 +27,11 @@ func _find_queen_position(column):
 
 func generate_genes():
 	for i in range(globals_ref.SIZE):
-		board[randi() % globals_ref.SIZE][i]
+		board[randi() % globals_ref.SIZE][i] = 1
 
 
 func crossover(partner):
-	var child = Board.new(globals_ref)
+	var child = get_script().new(globals_ref)
 	child.setup()
 	
 	for i in range(globals_ref.SIZE):
@@ -144,7 +142,7 @@ func calculate_fitness() -> float:
 			var cxpos = qpos.x - 1
 			
 			while cxpos >= 0:
-				if board[qpos.y][qpos.x] == 1:
+				if board[qpos.y][cxpos] == 1:
 					found_L = true
 					break
 					
@@ -158,14 +156,13 @@ func calculate_fitness() -> float:
 			var cxpos = qpos.x + 1
 			
 			while cxpos <= globals_ref.SIZE - 1:
-				if board[qpos.y][qpos.x] == 1:
+				if board[qpos.y][cxpos] == 1:
 					found_R = true
 					break
 					
 				cxpos = cxpos + 1
 				
-		if not found_R: score += portion		
-				
+		if not found_R: score += portion
 				
 				
 	fitness = score
