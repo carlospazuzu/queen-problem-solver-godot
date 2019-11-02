@@ -13,28 +13,28 @@ func _init(gref):
 # Called when the node enters the scene tree for the first time.
 func setup():
 	board = []
-	for i in range(globals_ref.SIZE):
+	for i in range(globals_ref.size):
 		board.append([])
-		for j in range(globals_ref.SIZE):
+		for j in range(globals_ref.size):
 			board[i].append(0)
 
 
 func _find_queen_position(column):
-	for i in range(globals_ref.SIZE):
+	for i in range(globals_ref.size):
 		if board[i][column] == 1:
 			return i
 
 
 func generate_genes():
-	for i in range(globals_ref.SIZE):
-		board[randi() % globals_ref.SIZE][i] = 1
+	for i in range(globals_ref.size):
+		board[randi() % globals_ref.size][i] = 1
 
 
 func crossover(partner):
 	var child = get_script().new(globals_ref)
 	child.setup()
 	
-	for i in range(globals_ref.SIZE):
+	for i in range(globals_ref.size):
 		var r = randi() % 2
 		
 		if r == 0:
@@ -46,16 +46,16 @@ func crossover(partner):
 	
 
 func mutate():
-	for i in range(globals_ref.SIZE):
+	for i in range(globals_ref.size):
 		var r = randi() % 100
 		
 		if r == 1:
 			board[_find_queen_position(i)][i] = 0
-			board[randi() % globals_ref.SIZE][i] = 1
+			board[randi() % globals_ref.size][i] = 1
 	
 	
 func _find_queen_vector2D(column):
-	for i in range(globals_ref.SIZE):
+	for i in range(globals_ref.size):
 		if board[i][column] == 1:
 			var position = Vector2()
 			position.x = column
@@ -65,11 +65,11 @@ func _find_queen_vector2D(column):
 			
 			
 func calculate_fitness() -> float:
-	var portion: float = 0.041666666666666664
+	var portion: float = (1.0 / globals_ref.size) / 6.0 
 
 	var score: float = 0.0
 	
-	for i in range(globals_ref.SIZE):
+	for i in range(globals_ref.size):
 		var qpos = _find_queen_vector2D(i)
 		
 		var found_UL: bool = false
@@ -90,11 +90,11 @@ func calculate_fitness() -> float:
 		
 		var found_UR: bool = false
 		
-		if qpos.y > 0 and qpos.x <= globals_ref.SIZE - 1:
+		if qpos.y > 0 and qpos.x <= globals_ref.size - 1:
 			var cxpos = qpos.x + 1
 			var cypos = qpos.y - 1
 			
-			while cxpos <= globals_ref.SIZE - 1 and cypos >= 0:
+			while cxpos <= globals_ref.size - 1 and cypos >= 0:
 				if board[cypos][cxpos] == 1:
 					found_UR = true
 					break
@@ -106,11 +106,11 @@ func calculate_fitness() -> float:
 		
 		var found_LL: bool = false
 		
-		if qpos.y < globals_ref.SIZE - 1 and qpos.x > 0:
+		if qpos.y < globals_ref.size - 1 and qpos.x > 0:
 			var cxpos = qpos.x - 1
 			var cypos = qpos.y + 1
 			
-			while cxpos >= 0 and cypos <= globals_ref.SIZE - 1:
+			while cxpos >= 0 and cypos <= globals_ref.size - 1:
 				if board[cypos][cxpos] == 1:
 					found_LL = true
 					break
@@ -122,11 +122,11 @@ func calculate_fitness() -> float:
 		
 		var found_LR: bool = false
 		
-		if qpos.y < globals_ref.SIZE - 1 and qpos.x < globals_ref.SIZE - 1:
+		if qpos.y < globals_ref.size - 1 and qpos.x < globals_ref.size - 1:
 			var cxpos = qpos.x + 1
 			var cypos = qpos.y + 1
 			
-			while cxpos <= globals_ref.SIZE - 1 and cypos <= globals_ref.SIZE - 1:
+			while cxpos <= globals_ref.size - 1 and cypos <= globals_ref.size - 1:
 				if board[cypos][cxpos] == 1:
 					found_LR = true
 					break
@@ -152,10 +152,10 @@ func calculate_fitness() -> float:
 				
 		var found_R: bool = false
 		
-		if qpos.x < globals_ref.SIZE - 1:
+		if qpos.x < globals_ref.size - 1:
 			var cxpos = qpos.x + 1
 			
-			while cxpos <= globals_ref.SIZE - 1:
+			while cxpos <= globals_ref.size - 1:
 				if board[qpos.y][cxpos] == 1:
 					found_R = true
 					break

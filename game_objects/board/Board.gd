@@ -1,12 +1,14 @@
-extends Node2D
+ extends Node2D
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+onready var globals_ref = get_node('/root/Globals')
+
+var square: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	
+	square = OS.window_size.x / (globals_ref.size + 2)
+			
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -21,8 +23,9 @@ func _get_color(neg):
 
 func _draw():
 	var neg = false
-	for i in range(4):
-		for j in range(4):
-			draw_rect(Rect2(Vector2(110 * j + 110, 110 * i + 110), Vector2(110, 110)), Color(_get_color(neg)), true)
+	for i in range(globals_ref.size):
+		for j in range(globals_ref.size):
+			draw_rect(Rect2(Vector2(square * j + square, square * i + square), Vector2(square, square)), Color(_get_color(neg)), true)
 			neg = not neg
-		neg = not neg
+		if globals_ref.size % 2 == 0:
+			neg = not neg

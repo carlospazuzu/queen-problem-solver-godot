@@ -18,10 +18,30 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
+	current_board_size = $"/root/Globals".size
+	
+	for i in range(MAX_BOARD_SIZE):
+		title_queens[i].position = Vector2(-100, 0)
+	
 	match current_board_size:
 		4:
 			title_queens[0].position = Vector2(330 - title_queens[0].texture.get_width() * 0.25, 330 - title_queens[0].texture.get_height() * 0.25)
 			title_queens[1].position = Vector2(330 + title_queens[1].texture.get_width() * 0.25, 330 - title_queens[1].texture.get_height() * 0.25)
 			title_queens[2].position = Vector2(330 - title_queens[2].texture.get_width() * 0.25, 330 + title_queens[2].texture.get_height() * 0.25)
 			title_queens[3].position = Vector2(330 + title_queens[3].texture.get_width() * 0.25, 330 + title_queens[3].texture.get_height() * 0.25)
-			pass
+		5:
+			title_queens[0].position = Vector2(330, 330)
+			title_queens[1].position = Vector2(330 - title_queens[0].texture.get_width() * 0.25, 330 - title_queens[0].texture.get_height() * 0.25)
+			title_queens[2].position = Vector2(330 + title_queens[1].texture.get_width() * 0.25, 330 - title_queens[1].texture.get_height() * 0.25)
+			title_queens[3].position = Vector2(330 - title_queens[2].texture.get_width() * 0.25, 330 + title_queens[2].texture.get_height() * 0.25)
+			title_queens[4].position = Vector2(330 + title_queens[3].texture.get_width() * 0.25, 330 + title_queens[3].texture.get_height() * 0.25)
+		6:
+			title_queens[0].position = Vector2(220, 120)
+			title_queens[1].position = Vector2(220, 290)
+			title_queens[2].position = Vector2(220, 460)
+			
+			title_queens[3].position = Vector2(440, 120)
+			title_queens[4].position = Vector2(440, 290)
+			title_queens[5].position = Vector2(440, 460)
+			

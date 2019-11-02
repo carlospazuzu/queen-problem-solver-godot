@@ -4,7 +4,7 @@ var Population = load('res://scripts/population.gd')
 var population = null
 
 var count: int = 0
-var icount: int = 5
+var icount: int = 2
 
 var found_solution: bool = false
 
@@ -24,11 +24,11 @@ func _process(delta):
 		
 		var cf = population.get_current_fittest()
 		
-		if icount >= 5:
+		if icount >= 2:
 			get_node("/root/Main/QueenPlacer/").place_queens(cf)
 			icount = 0
 		
-		if population.get_current_fittest_fitness() >= 0.95:
+		if population.get_current_fittest_fitness() >= 1.0:
 			found_solution = true
 	
 	print('Generation ', count, ' MAX FITNESS = ', population.get_current_fittest_fitness())
